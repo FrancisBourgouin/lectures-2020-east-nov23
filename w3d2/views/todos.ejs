@@ -1,0 +1,17 @@
+<%- include('partials/_head') %>
+
+<h1>Hello! This is the list of todos</h1>
+<ul>
+  <% for(const key in todos) { %>
+  <li>
+    <a href="/todos/<%= key %>"><%= todos[key] %></a>
+    <form action="/todos/<%= key%>/delete" method="POST">
+      <button type="submit">DELETE!</button>
+    </form>
+  </li>
+  <% } %>
+
+</ul>
+</body>
+
+</html>

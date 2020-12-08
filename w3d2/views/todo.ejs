@@ -1,0 +1,16 @@
+<%- include('partials/_head') %>
+
+<h1>Hello! This is a todo</h1>
+<p><%= todo %></p>
+
+<form action="/todos/<%= key %>/update" method="POST">
+  <input class="form-control" type="text" name="todo" placeholder="Enter the updated todo name thing">
+  <button class="btn btn-primary" type="submit">Update!</button>
+</form>
+<form action="/todos/<%= key %>/delete" method="POST">
+  <button class="btn btn-primary" type="submit">DELETE!</button>
+</form>
+
+</body>
+
+</html>
