@@ -1,0 +1,17 @@
+body{
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:white;
+  color:black;
+  margin:0 auto;
+  max-width:900px;
+  font-size:30px;
+}
+
+body.darkmode{
+  background:black;
+  color:white;
+}
+
+h1{
+  text-align: center;
+}
