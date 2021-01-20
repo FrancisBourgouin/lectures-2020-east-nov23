@@ -1,0 +1,9 @@
+body{
+  background:#333;
+  color:white;
+  text-align: center;
+  font-size:50px;
+}
+button, form input{
+  font-size:1em;
+}
