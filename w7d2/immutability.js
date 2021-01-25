@@ -27,3 +27,7 @@ someObject.likesChicken = true
 someObject["likesChicken"] = true
 
 const someOtherObject = { ...someObject, height: 'dunno' }
+
+const someOtherObject = { ...someObject, [someVarHoldingTheKeyName]: 'dunno' }
+const someOtherObject = { ...someObject }
+someOtherObject[someVarHoldingTheKeyName] = 'dunno'
