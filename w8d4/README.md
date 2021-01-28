@@ -1,58 +1,161 @@
-# W8D2 - Real World React
+# W8D4 - Class Components in React
 
 ## Today's menu
 
-- Frontend routing with React Router
-- Playing with a global state with useContext
-- Authentication in a SPA
-- Using references with useRef (extra, if we have time)
+- Class recap
+- Building a functionnal small app (Github Viewer)
+- Lifecycle method (water cycle, but harder)
+- Building a classy small app (Github Viewer)
+- Main difference between Hooks & Class based approaches
+- React class reference
 
-## Frontend routing with React Router
+## Classes like this class? (No.)
 
-Frontend routing is different from what we've been playing with so far. 
+Classes in programming ! Before hooks, we used to build React apps with Class components. Here are the key differences of class components:
 
-The goal of frontend routes is to conditionally show you a set of components, a little bit like what the useVisualMode hook that we built is doing in our scheduler project. However, it uses the url path as a source, or guide, to determine what to show. 
+## JavaScript Classes quick review
 
-The illusion of changing 'pages' in a React app with the router is achieved by conditionnal rendering, not by reloading the page.
+Classes are a template for creating objects. They encapsulate data with code to work on that data. Classes in JS are built on prototypes but also have some syntax and semantics that are not shared with ES5 classalike semantics.
 
-References: 
-- https://reactrouter.com/web/guides/quick-start
-- The `demo-react-router` demonstration
+```jsx
+class Rectangle {
+  constructor(height, width) {
+    this.height = height;
+    this.width = width;
+  }
 
-## Playing with a global state with useContext
+  getArea(){
+    return this.height * this.width
+  }
+}
 
-When we deal with apps that have a lot of different components that are deeply nested, it can be very annoying to pass down props to the last element. This is called prop drilling. The problem is the deeper you go, the easier it is to do a small mistake in naming or referencing, and break down the entire chain of drilling.
+const myRectangle = new Rectangle(100,100)
 
-To alleviate those issues, it's possible for us to use the concept of context. Creating a context provider will allow all children to access the values stored inside the context, with having it drilled down.
+myRectangle.getArea()
 
-References: 
-- https://reactjs.org/docs/hooks-reference.html#usecontext
-- The `demo-context-hook` demonstration
+```
 
-## Authentication in a SPA
+## Key differences
 
-Authentication in our past project were done when using multi-page applications. The authentication sequence would go like this:
+- Instead of using multiple smaller functions, we group them up inside Class methods
+- When using Class components, Hooks are off the plate!
+- Inside a class component, we must use the `this` keyword
+- class components use lifecycle methods instead of hooks
+- if the component needs a state, use a class component. If the component does not need to use state, just create a functional stateless component
 
-- We want to access a protected route `/private`
-- We are redirected to `/login` since we do not have a cookie proving we are authenticated
-- We fill the form and submit, posting to `/login`
-- We get a redirection to `/private`, this time bearing a cookie
-- The `/private` route reads the data from the cookie and generate the content
-- We get the content.
+## Lifecycle Methods
 
-However, in a single page app, we ideally don't want to be redirected, or refreshed. Also, in a SPA, we want content from an API, not rendered content. In our app, we know if we're logged in or not, since we control our state. A flow would look like that.
+Instead of relying on hooks, class components are using lifecycle methods. We've looked at the following diagram:
 
-- We want to show content of the components called by the `/private` frontend route.
-- We are not authenticated since we don't have a `user object` in our state
-- We render the login component, and post to `/login`
-- We get a `JSON answer` back, containing a `cookie` (this is a contentious part)
-- We store the `user object` in our state and show the components again.
+- [Lifecycle Methods](./lifecycle.jpeg)
 
-References: 
-- The `demo-user-authentication` demonstration
+## Classes in React
 
-## Using references with useRef
+### Basic form
 
-References: 
-- https://reactjs.org/docs/hooks-reference.html#useref
-- The `demo-react-router` demonstration
+```jsx
+class World extends Component {
+	render() {
+		return (
+			<div>
+				<hello world/>
+			</div>
+		)
+	}
+}
+```
+
+### Receiving props
+
+Using `the` constructor, we can get props passed into our component. 
+
+```jsx
+class World extends Component {
+	constructor(props) {
+		super(props);
+		console.log(props)
+	}
+
+	render() {
+		return (
+			<div>
+				<hello world/>
+				{this.props.name}
+			</div>
+		)
+	}
+}
+```
+**Notice:** the `this` keyword. Due to the fact of the scope of variables, We use the `this` keyword to get values like `props`, `state`, and function calls that we may define.
+
+### Holding State
+
+Other than props, components can have state.
+
+```jsx
+class World extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			num: 1
+		}
+	}
+
+	addNum = () => {
+		this.setState(prev => {...prev, num: prev.num + 1})
+	}
+
+
+	render() {
+		return (
+			<div>
+				<hello world/>
+				{this.props.name}
+				{this.state.num}
+				<button onClick={addNum}>Click Me</button>
+			</div>
+		)
+	}
+}
+```
+
+### Lifecycle methods
+
+Don't forget to have a look at the lifecycle method image in the notes also!
+
+```jsx
+class World extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			num: 1
+		}
+	}
+
+	addNum = () => {
+		this.setState(prev => {...prev, num: prev.num + 1})
+	}
+  	componentDidMount() {
+  		//...
+  	}
+  	componentDidUpdate(prevProps, prevState, snapshot) {
+    	//...
+  	}
+  	componentWillUnmount() {
+    	//...
+  	}
+
+	render() {
+		return (
+			<div>
+				<hello world/>
+				{this.props.name}
+				{this.state.num}
+				<button onClick={addNum}>Click Me</button>
+			</div>
+		)
+	}
+}
+```
+
+
